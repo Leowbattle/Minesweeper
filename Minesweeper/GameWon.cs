@@ -5,12 +5,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Minesweeper
 {
-	public class GameOver : GameObject
+	public class GameWon : GameObject
 	{
-		public GameOver()
+		public GameWon()
 		{
 			StartCoroutine(Fade());
-			StartCoroutine(DoGameOver());
+			StartCoroutine(DoGameWon());
 		}
 
 		float fade = 0;
@@ -23,9 +23,9 @@ namespace Minesweeper
 			}
 		}
 
-		private const string Text = "Game Over!";
+		private const string Text = "Game Won!";
 		Vector2 textPos = new Vector2(-1000, -1000);
-		private IEnumerator DoGameOver()
+		private IEnumerator DoGameWon()
 		{
 			textPos = new Vector2((Game.Window.ClientBounds.Width - Game.FontTitle.MeasureString(Text).X) / 2, -150);
 			while (textPos.Y < 80)
@@ -39,7 +39,7 @@ namespace Minesweeper
 		{
 			base.Draw();
 
-			SpriteBatch.Draw(Game.PixelTexture, new Rectangle(0, 0, Game.GameWidth, Game.GameHeight), new Color(0, 0, 0, fade));
+			SpriteBatch.Draw(Game.PixelTexture, new Rectangle(0, 0, Game.GameWidth, Game.GameHeight), new Color(fade, fade, fade, fade));
 		}
 
 		public override void DrawUnscaled()

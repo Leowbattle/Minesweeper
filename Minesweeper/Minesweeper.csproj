@@ -35,6 +35,11 @@
     <None Include="Content\OpenSans-Regular.ttf" />
     <None Include="Content\Font_Title.spritefont" />
     <None Include="Content\Font_Regular.spritefont" />
+    <None Include="Content\bg1.png" />
+    <None Include="Content\woo.ogg" />
+    <None Include="Content\sound.txt" />
+    <None Include="Content\woo.wav" />
+    <None Include="Content\boo.wav" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -52,6 +57,11 @@
     <Compile Include="Input.cs" />
     <Compile Include="FadingTile.cs" />
     <Compile Include="GameOver.cs" />
+    <Compile Include="Screen.cs" />
+    <Compile Include="MenuScreen.cs" />
+    <Compile Include="PlayScreen.cs" />
+    <Compile Include="Button.cs" />
+    <Compile Include="GameWon.cs" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />

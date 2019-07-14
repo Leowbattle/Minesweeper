@@ -37,7 +37,7 @@ namespace Minesweeper
 			base.Draw();
 
 			var colour = new Color(MathHelper.Lerp(C1.R, C2.R, Amount), MathHelper.Lerp(C1.G, C2.G, Amount), MathHelper.Lerp(C1.B, C2.B, Amount), MathHelper.Lerp(C1.A, C2.A, Amount));
-			SpriteBatch.Draw(Game.TilesTexture, new Rectangle(Position, new Point(Minesweeper.TileSize)), new Rectangle(Minesweeper.TileSize, Minesweeper.TileSize * 2, Minesweeper.TileSize, Minesweeper.TileSize), colour);
+			SpriteBatch.Draw(Game.TilesTexture, new Rectangle(Position * new Point(Board.Instance.BoardScale), new Point(Minesweeper.TileSize * Board.Instance.BoardScale)), new Rectangle(Minesweeper.TileSize, Minesweeper.TileSize * 2, Minesweeper.TileSize, Minesweeper.TileSize), colour);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace Minesweeper
@@ -7,6 +8,8 @@ namespace Minesweeper
 	{
 		public static MouseState MouseState;
 		public static MouseState LastMouseState;
+
+		public static Point MousePos => MouseState.Position;
 
 		public static bool LeftMouseDown => MouseState.LeftButton == ButtonState.Pressed;
 		public static bool LeftMouseClicked => MouseState.LeftButton == ButtonState.Pressed && LastMouseState.LeftButton != ButtonState.Pressed;
@@ -17,7 +20,7 @@ namespace Minesweeper
 		public static KeyboardState KeyboardState;
 		public static KeyboardState LastKeyboardState;
 
-		public static bool KeyJustPressed(Keys key) => KeyboardState.IsKeyDown(key) && !KeyboardState.IsKeyDown(key);
+		public static bool KeyJustPressed(Keys key) => KeyboardState.IsKeyDown(key) && !LastKeyboardState.IsKeyDown(key);
 
 		public static void Update()
 		{
