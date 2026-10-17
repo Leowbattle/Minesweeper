@@ -33,6 +33,21 @@ because `Board.cs` contains a `#if DEBUG` block.
 - Mouse coordinates are translated from window pixels into the letterboxed
   logical frame before the game sees them.
 
+## GitHub Pages
+
+The workflow in `.github/workflows/pages.yml` builds the web app on pull requests
+and deploys it to GitHub Pages when `master` is updated.
+
+Before the first deploy, enable Pages in the repository settings:
+
+1. Go to **Settings → Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+
+The workflow rewrites the `<base href>` in `index.html` to the repository path
+(for example `/Minesweeper/`) and adds a `.nojekyll` file so the `_framework`
+directory is served. If you use a custom domain or a `<user>.github.io`
+repository, adjust the base path logic in the workflow.
+
 ## Content
 
 `wwwroot/Content/*.xnb` are the compiled content files from the repository's
