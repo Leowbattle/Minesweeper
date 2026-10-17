@@ -10,7 +10,7 @@ namespace Minesweeper
 
 		public MenuScreen()
 		{
-			titlePos = new Vector2((Game.Window.ClientBounds.Width - Game.FontTitle.MeasureString(title).X) / 2, 80);
+			titlePos = new Vector2((Game.LogicalWidth - Game.FontTitle.MeasureString(title).X) / 2, 80);
 
 			var easy = new Button();
 			easy.Text = "Easy";
@@ -33,7 +33,7 @@ namespace Minesweeper
 
 		public override void Draw()
 		{
-			SpriteBatch.Draw(Game.MenuBG, Vector2.Zero);
+			SpriteBatch.Draw(Game.MenuBG, Vector2.Zero, Color.White);
 			SpriteBatch.Draw(Game.PixelTexture, new Rectangle(0, 0, Game.GameWidth, Game.GameHeight), new Color(0, 0, 0, 0.5f));
 
 			base.Draw();
