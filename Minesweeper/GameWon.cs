@@ -27,7 +27,7 @@ namespace Minesweeper
 		Vector2 textPos = new Vector2(-1000, -1000);
 		private IEnumerator DoGameWon()
 		{
-			textPos = new Vector2((Game.Window.ClientBounds.Width - Game.FontTitle.MeasureString(Text).X) / 2, -150);
+			textPos = new Vector2((Game.LogicalWidth - Game.FontTitle.MeasureString(Text).X) / 2, -150);
 			while (textPos.Y < 80)
 			{
 				textPos.Y += 4;

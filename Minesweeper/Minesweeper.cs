@@ -21,11 +21,16 @@ namespace Minesweeper
 			set
 			{
 				windowScale = value;
+#if !BLAZORGL
 				GraphicsDeviceManager.PreferredBackBufferWidth = windowScale * GameWidth;
 				GraphicsDeviceManager.PreferredBackBufferHeight = windowScale * GameHeight;
 				GraphicsDeviceManager.ApplyChanges();
+#endif
 			}
 		}
+
+		public int LogicalWidth => GameWidth * WindowScale;
+		public int LogicalHeight => GameHeight * WindowScale;
 
 		public GraphicsDeviceManager GraphicsDeviceManager;
 		public SpriteBatch SpriteBatch;
@@ -35,6 +40,10 @@ namespace Minesweeper
 		public Texture2D UITexture;
 
 		public Texture2D MenuBG;
+
+#if BLAZORGL
+		private RenderTarget2D GameRenderTarget;
+#endif
 
 		public SpriteFont FontRegular;
 		public SpriteFont FontTitle;
@@ -97,6 +106,14 @@ namespace Minesweeper
 
 		protected override void Draw(GameTime gameTime)
 		{
+#if BLAZORGL
+			if (GameRenderTarget == null || GameRenderTarget.IsDisposed)
+			{
+				GameRenderTarget = new RenderTarget2D(GraphicsDevice, LogicalWidth, LogicalHeight);
+			}
+
+			// Render the game at its fixed logical resolution.
+			GraphicsDevice.SetRenderTarget(GameRenderTarget);
 			GraphicsDevice.Clear(Color.Black);
 
 			SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(WindowScale));
@@ -107,6 +124,34 @@ namespace Minesweeper
 			CurrentScreen.DrawUnscaled();
 			SpriteBatch.End();
 
+			// Letterbox the logical frame into the actual back buffer.
+			GraphicsDevice.SetRenderTarget(null);
+			GraphicsDevice.Clear(Color.Black);
+
+			var pp = GraphicsDevice.PresentationParameters;
+			float scale = Math.Min(
+				(float)pp.BackBufferWidth / LogicalWidth,
+				(float)pp.BackBufferHeight / LogicalHeight);
+
+			int width = (int)Math.Round(LogicalWidth * scale);
+			int height = (int)Math.Round(LogicalHeight * scale);
+			int x = (pp.BackBufferWidth - width) / 2;
+			int y = (pp.BackBufferHeight - height) / 2;
+
+			SpriteBatch.Begin(samplerState: SamplerState.LinearClamp);
+			SpriteBatch.Draw(GameRenderTarget, new Rectangle(x, y, width, height), Color.White);
+			SpriteBatch.End();
+#else
+			GraphicsDevice.Clear(Color.Black);
+
+			SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(WindowScale));
+			CurrentScreen.Draw();
+			SpriteBatch.End();
+
+			SpriteBatch.Begin();
+			CurrentScreen.DrawUnscaled();
+			SpriteBatch.End();
+#endif
 			base.Draw(gameTime);
 		}
 	}

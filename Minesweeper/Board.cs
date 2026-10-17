@@ -185,7 +185,14 @@ namespace Minesweeper
 
 			if (gameOverStarted) return;
 
-			var hoveredTile = Input.MouseState.Position / new Point(Game.WindowScale * Minesweeper.TileSize) / new Point(BoardScale);
+			var mouse = Input.MousePos;
+			bool mouseInFrame = mouse.X >= 0 && mouse.Y >= 0
+				&& mouse.X < Game.LogicalWidth && mouse.Y < Game.LogicalHeight;
+
+			var hoveredTile = mouseInFrame
+				? mouse / new Point(Game.WindowScale * Minesweeper.TileSize) / new Point(BoardScale)
+				: new Point(-1, -1);
+
 			if (InBounds(hoveredTile.X, hoveredTile.Y))
 			{
 				HoveredTile = hoveredTile;
